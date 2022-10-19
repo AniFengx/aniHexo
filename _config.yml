@@ -4,7 +4,7 @@
 
 # Site
 title: Ani的第九艺术
-subtitle: ''
+subtitle: 'blog from anifengx'
 description: 'software'
 keywords: 'java'
 author: AniFengx
@@ -137,19 +137,3 @@ markdown:
     lazyload: false
     prepend_root: true
     post_asset: true
-
-# opitions for renderer
-markdown_it_plus:
-  preset: 'default'
-  highlight: true
-  html: true
-  xhtmlOut: true
-  breaks: true
-  langPrefix:
-  linkify: true
-  typographer:
-  quotes: “”‘’
-  pre_class: highlight
-  lazyload: false
-  prepend_root: false
-  post_asset: false

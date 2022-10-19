@@ -5,8 +5,6 @@ tags: [bug]
 categories: [开发日常]
 ---
 
-# java内存泄露事故分析
-
 ### 问题描述
 
 **电影票**长期存在**ticket**模块堆栈内存溢出导致系统崩溃的问题，初期一直认为是订单量过大导致比价功能调用次数太多引起的内存溢出问题。经过排查dump日志未能定位到具体问题，最终特权选择多开**ticket**模块的方式来避免单机崩溃导致服务不可用的情况，但是此方法治标不治本，运维需要经常重启崩溃的**ticket**模块。
@@ -62,7 +60,7 @@ categories: [开发日常]
 #### 步骤5
 排查代码发现***getResponse***方法有非常高的可疑性，使用了第三方序列化方式***Json.fromJson***，并且使用了**PType**第三方工具来标识序列化类型，更加可疑，此序列化方法和**org.nutz.lang.Mirror**同属于**nutz**第三方工具包，基本已锁定到问题代码。
 
-```    
+``` java
 	@Override
     public List<YtbShowBo> getResponse() {
         String data = this.getData();

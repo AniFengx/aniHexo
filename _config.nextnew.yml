@@ -14,7 +14,7 @@ cache:
   enable: true
 
 # Remove unnecessary files after hexo generate.
-minify: false
+minify: true
 
 # Define custom file paths.
 # Create your custom files in site directory `source/_data` and uncomment needed files below.
@@ -459,7 +459,7 @@ font:
   # Font settings for <code> and code blocks.
   codes:
     external: true
-    family:
+    family: 
 
 
 # ---------------------------------------------------------------
@@ -490,7 +490,7 @@ yandex_site_verification:
 
 # Baidu Webmaster tools verification.
 # See: https://ziyuan.baidu.com/site
-baidu_site_verification:
+baidu_site_verification: code-84jI6cSOsn
 
 
 # ---------------------------------------------------------------
@@ -681,7 +681,7 @@ google_analytics:
 
 # Baidu Analytics
 # See: https://tongji.baidu.com
-baidu_analytics: # <app_id>
+baidu_analytics: 3b4053a66cb17ec41da6e611908be504 # <app_id>
 
 # Growingio Analytics
 # See: https://www.growingio.com

@@ -5,8 +5,6 @@ tags: spotbugs
 categories: [开发工具]
 ---
 
-# 代码规范
-
 ## 前言
 
 代码质量主要依靠代码检查来进行，但当前代码检查占用较多工时。现推荐一个比较成熟的代码检查插件，要求JAVA开发每次提交代码前都应使用插件自检，可以一定程度上减少代码检查所用的时间，帮助开发人员规范编码习惯，提高编码水平，本插件不能替代阿里巴巴开发规范插件，只是对其的补充。
@@ -55,7 +53,7 @@ SpotBugs扫描出的问题主要分为几个大类，每个大类中包含多个
 <br />
 <font color="#FF0000">反例：</font>
 
-```
+``` java
 List<String> strList = new ArrayList<>();
 strList.add("1");
 List<Long> idList = new ArrayList<>();
@@ -71,7 +69,7 @@ equals方法比较的双方不是相同类型
 <br />
 <font color="#FF0000">反例：</font>
 
-```
+``` java
 cn.common.enums.OrderStatusEnum.REFUNDED.equals(cn.common.kentucky.enums.OrderStatusEnum.REFUNDED)
 ```
 
@@ -81,7 +79,7 @@ cn.common.enums.OrderStatusEnum.REFUNDED.equals(cn.common.kentucky.enums.OrderSt
 <br />
 <font color="#FF0000">反例：</font>
 
-```
+``` java
 Order order = OrderDao.getOrder(dto.getId());
 if (BreakUpType.CHILD.equals(order.getBreakUpType())) {
     // do something
@@ -97,7 +95,7 @@ if (order == null) {
 <br />
 <font color="#FF0000">反例：</font>
 
-```
+``` java
 private void partialH5Refund(Long id, String refundNo, String content, OrderRefund orderRefund) throws Exception {
 	// String类型采用值传递，在方法中修改参数并不会影响原参数
     content = String.format("系统同步部分退款, 退款交易流水号[%s]", refundNo);
@@ -112,7 +110,7 @@ private void partialH5Refund(Long id, String refundNo, String content, OrderRefu
 <br />
 <font color="#FF0000">反例：</font>
 
-```
+``` java
 public void setClearInterval(Long clearInterval) {
 	// 应该使用this引用
     clearInterval = clearInterval;
@@ -125,7 +123,7 @@ public void setClearInterval(Long clearInterval) {
 <br />
 <font color="#FF0000">反例：</font>
 
-```
+``` java
 public class OrderConfig extends cn.kentucky.order.config.OrderConfig
 ```
 
@@ -143,7 +141,7 @@ public class OrderConfig extends cn.kentucky.order.config.OrderConfig
 <br />
 <font color="#006666">正例：</font>
 
-```
+``` java
 byte[] data = plainText.getBytes(StandardCharsets.UTF_8);
 ```
 
@@ -153,9 +151,8 @@ byte[] data = plainText.getBytes(StandardCharsets.UTF_8);
 <br />
 <font color="#FF0000">反例：</font>
 
-```
+``` java
 String referer = request.getHeader("REFERER");
-
 response.sendRedirect(referer);
 ```
 
@@ -169,7 +166,7 @@ JAVA中当子类使用lombok插件的@Data注解时，必须配上@EqualsAndHash
 
 <font color="#006666">正例：</font>
 
-```
+``` java
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class McOrderVO extends McOrder implements Serializable
@@ -181,7 +178,7 @@ public class McOrderVO extends McOrder implements Serializable
 <br />
 <font color="#FF0000">反例：</font>
 
-```
+``` java
 Map<String, Object> paramMap = null;
 try {
     paramMap = commonDingTalkPayService.payForApplet(aliConfig.getAppId());
@@ -200,7 +197,7 @@ paramMap.put("payInfo", data);
 <br />
 <font color="#006666">正例：</font>
 
-```
+``` java
 public class Test3 {
 
     private Date regDate ;
@@ -247,7 +244,7 @@ public class Test3 {
 <br />
 <span><font color="#006666">正例：</font>涉及2.3-2.8</span>
 
-```
+``` java
 public class TestMap {
   // list也应设置为不可修改的类型，并且建议使用list替换array格式，array只能通过protected修改来防止修改。
   public static final List<String> UPLOAD_IMAGE_TYPES = ImmutableList.of("image/jpeg", "image/png", "image/bmp");
@@ -295,7 +292,7 @@ JAVA中三目运算时，如果同时存在基本类型和包装类型，JAVA会
 <br />
 <font color="#006666">正例：</font>
 
-```
+``` java
 return this.isTempDrug == null ? Integer.valueOf(0) : this.isTempDrug;
 ```
 
@@ -305,7 +302,7 @@ return this.isTempDrug == null ? Integer.valueOf(0) : this.isTempDrug;
 <br />
 <font color="#FF0000">反例：</font>
 
-```
+``` java
 Map<String, String> param = new HashMap<>();
 for (String key : param.keySet()) {
 	// 从map中根据key获取value会浪费性能
@@ -321,7 +318,7 @@ for (String key : param.keySet()) {
 <br />
 <font color="#006666">正例：</font>
 
-```
+``` java
 	try{
 　　　　// do something
 　　}
@@ -346,7 +343,7 @@ switch出现条件中未添加break导致进入default的情况
 <br />
 <font color="#FF0000">反例：</font>
 
-```
+``` java
 switch (sendOrderRequest.getOrderStatus()) {
     case SUCCESS:
         dealSuccess(order, sendOrderRequest);
