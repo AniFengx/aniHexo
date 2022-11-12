@@ -19,7 +19,7 @@ google近期关闭了国内谷歌翻译网站，但是chrome浏览器内置的�
 
 ```
 203.208.40.66 translate.google.com
-203.208.40.66 translate.googleapis.com
+142.250.4.90 translate.googleapis.com
 ```
 
 保存修改后，chrome即可正常使用

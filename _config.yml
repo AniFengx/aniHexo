@@ -73,8 +73,11 @@ default_category: uncategorized
 category_map:
   开发工具: developTools
   开发日常: developLive
+  管理: manage
+  面试题: audition
 tag_map:
   博客: boke
+  管理: manage
 # Metadata elements
 ## https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta
 meta_generator: true
