@@ -26,7 +26,7 @@ spring基本已经是java开发的主流框架，spring也提供了**Actuator**�
 1. 新建模块，直接在ide工具中new一个新模块即可，创建`application.java`文件和`application.yml`文件
 2. 新模块pom文件中添加依赖
 
-    ``` java
+    ``` xml
     <!--  支持admin-ui的关键配置  -->
     <dependency>
         <groupId>de.codecentric</groupId>
@@ -60,7 +60,7 @@ spring基本已经是java开发的主流框架，spring也提供了**Actuator**�
 
 1. 修改需要监控的业务模块的pom文件
 
-    ``` java
+    ``` xml
         <!--  支持admin-ui的关键配置  -->
         <dependency>
             <groupId>de.codecentric</groupId>
