@@ -216,6 +216,8 @@ scrape_configs:
 
 {% note %} 安装方式参考[官网安装说明](https://grafana.com/docs/grafana/latest/setup-grafana/installation/ "官网安装说明")，安装最新版本即可 {% endnote %}
 
+{% note warning %} **grafana**如果通过installer方式安装，默认是电脑重启后自动启动的，这个可以根据情况手动关闭自动启动服务 {% endnote %}
+
 启动grafana，进入安装后文件夹下`bin`中，执行如下命令
 
 ``` shell
