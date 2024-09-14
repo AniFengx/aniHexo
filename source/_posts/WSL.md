@@ -116,3 +116,54 @@ default = root
 需要注意的是 wsl.conf 配置优先级要高于Ubuntu2004.exe config --default-user，因此如果两个都配置了的话，会以 wsl.conf 中的配置优先。
 
 {% endnote %}
+
+### 网络问题
+
+使用 wsl2 版本，在宿主机和 wsl 中使用 localhost 都可访问到部署的服务
+
+> 使用远程 IP 地址连接到应用程序时，它们将被视为来自局域网 (LAN) 的连接。 这意味着你需要确保你的应用程序可以接受 LAN 连接。
+>
+> 例如，你可能需要将应用程序绑定到 0.0.0.0 而非 127.0.0.1。 以使用 Flask 的 Python 应用为例，可以通过以下命令执行此操作：app.run(host='0.0.0.0')。 进行这些更改时请注意安全性，因为这将允许来自你的 LAN 的连接。
+
+#### 从局域网 (LAN) 访问 WSL 2 分发版
+
+WSL 2 有一个带有其自己独一无二的 IP 地址的虚拟化以太网适配器。目前，若要启用此工作流，你需要执行与常规虚拟机相同的步骤。
+
+下面是使用  [Netsh 接口 portproxy](https://learn.microsoft.com/zh-cn/windows-server/networking/technologies/netsh/netsh-interface-portproxy1 "Netsh 接口 portproxy")  Windows 命令添加端口代理的示例，该代理侦听主机端口并将该端口代理连接到 WSL 2 VM 的 IP 地址。
+
+``` shell
+netsh interface portproxy add v4tov4 listenport=<yourPortToForward> listenaddress=0.0.0.0 connectport=<yourPortToConnectToInWSL> connectaddress=(wsl hostname -I)
+```
+
+在此示例中，需要更新 `<yourPortToForward>` 到端口号，例如 `listenport=4000`。 `listenaddress=0.0.0.0` 表示将接受来自任何 IP 地址的传入请求。 侦听地址指定要侦听的 IPv4 地址，可以更改为以下值：IP 地址、计算机 NetBIOS 名称或计算机 DNS 名称。 如果未指定地址，则默认值为本地计算机。 需要将 `<yourPortToConnectToInWSL>` 值更新为希望 WSL 连接的端口号，例如 `connectport=4000`。 最后，`connectaddress` 值必须是通过 WSL 2 安装的 Linux 分发版的 IP 地址（WSL 2 VM 地址），可通过输入命令：`wsl.exe hostname -I` 找到。
+
+因此，此命令可能如下所示：
+
+``` shell
+netsh interface portproxy add v4tov4 listenport=4000 listenaddress=0.0.0.0 connectport=4000 connectaddress=192.168.101.100
+```
+
+要获取 IP 地址，请使用：
+
+- `wsl hostname -I` 标识通过 WSL 2 安装的 Linux 分发版 IP 地址（WSL 2 VM 地址）
+- `cat /etc/resolv.conf` 表示从 WSL 2 看到的 WINDOWS 计算机的 IP 地址 (WSL 2 VM)
+
+{% note info %} 
+
+在主机名命令中使用小写“i”将生成与使用大写“I”不同的结果。 `wsl hostname -i` 是本地计算机（127.0.1.1 是占位符诊断地址），而 `wsl hostname -I` 会返回其他计算机所看到的本地计算机的 IP 地址，应该用于识别通过 WSL 2 运行的 Linux 发行版的 `connectaddress`。
+
+{% endnote %}
+
+#### netsh interface portproxy 常用命令
+
+Portproxy 服务器从服务器侦听的 IPv4 端口和地址列表中删除 IPv4 地址。
+
+``` shell
+netsh interface portproxy delete v4tov4 listenport=<yourPortToForward> listenaddress=0.0.0.0
+```
+
+显示所有 portproxy 参数，包括 v4tov4、v4tov6、v6tov4 和 v6tov6 的端口/地址对。
+
+``` shell
+netsh interface portproxy show all
+```
