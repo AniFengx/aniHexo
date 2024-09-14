@@ -129,7 +129,7 @@ default = root
 
 WSL 2 有一个带有其自己独一无二的 IP 地址的虚拟化以太网适配器。目前，若要启用此工作流，你需要执行与常规虚拟机相同的步骤。
 
-下面是使用  [Netsh 接口 portproxy](https://learn.microsoft.com/zh-cn/windows-server/networking/technologies/netsh/netsh-interface-portproxy1 "Netsh 接口 portproxy")  Windows 命令添加端口代理的示例，该代理侦听主机端口并将该端口代理连接到 WSL 2 VM 的 IP 地址。
+下面是使用 [Netsh 接口 portproxy](https://learn.microsoft.com/zh-cn/windows-server/networking/technologies/netsh/netsh-interface-portproxy1 "Netsh 接口 portproxy")  Windows 命令添加端口代理的示例，该代理侦听主机端口并将该端口代理连接到 WSL 2 VM 的 IP 地址。
 
 ``` shell
 netsh interface portproxy add v4tov4 listenport=<yourPortToForward> listenaddress=0.0.0.0 connectport=<yourPortToConnectToInWSL> connectaddress=(wsl hostname -I)
@@ -167,3 +167,36 @@ netsh interface portproxy delete v4tov4 listenport=<yourPortToForward> listenadd
 ``` shell
 netsh interface portproxy show all
 ```
+
+#### 镜像模式
+
+部分情况下，wsl 中的应用程序需要 wsl 虚拟机所在 ip 和宿主机保持一致，这时可启用 wsl 的镜像模式，参考 [参考](https://learn.microsoft.com/zh-cn/windows/wsl/wsl-config#wslconfig "WSL 中的高级设置配置") 
+
+开启方式为修改 .wslconfig 文件，使用 .wslconfig 为 WSL 上运行的所有已安装的发行版配置全局设置。
+
+- 默认情况下，.wslconfig 文件不存在。 它必须创建并存储在`%UserProfile%`目录中才能应用这些配置设置。
+- 用于在作为 WSL 2 版本运行的所有已安装的 Linux 发行版中全局配置设置。
+- 只能用于 WSL 2 运行的发行版。 作为 WSL 1 运行的发行版不受此配置的影响，因为它们不作为虚拟机运行。
+- 要访问 `%UserProfile%` 目录，请在 PowerShell 中使用 `cd ~` 访问主目录（通常是用户配置文件 `C:\Users\<UserName>`），或者可以打开 Windows 文件资源管理器并在地址栏中输入 `%UserProfile%`。 该目录路径应类似于：`C:\Users\<UserName>\.wslconfig`。
+
+WSL 将检测这些文件是否存在，读取内容，并在每次启动 WSL 时自动应用配置设置。 如果文件缺失或格式错误（标记格式不正确），则 WSL 将继续正常启动，而不应用配置设置。
+
+文件中添加 `[wsl2]` 标签,并在下方添加`networkingMode=mirrored`
+
+``` shell
+[wsl2]
+networkingMode=mirrored
+```
+
+
+
+### Windows 与 WSL 文件交互
+
+在 wsl 中可直接访问宿主机，宿主机盘符为`/mnt/`
+
+``` shell
+cp -r /mnt/e/BaiduNetdiskDownload/ls16 /home/soap/
+```
+
+`/mnt/e`表示本地的e盘，Windows 的文件路径为`/mnt/e/BaiduNetdiskDownload/ls16`，wsl 的目标路径为`/home/soap/`
+

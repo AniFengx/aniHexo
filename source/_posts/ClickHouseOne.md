@@ -77,3 +77,16 @@ ReplacingMergeTree 建表语句与 MergeTree 相同，只需要替换掉表引�
 
 在 DWS 之上，面向特定应用场景设计的数据层，比如我们 CDP 场景里面，用户标签、人群画像，是通过计算后直接给到前端应用系统使用的表
 
+### 搭建集群
+
+ClickHouse 集群的配置很简单，只需要修改配置文件 /etc/clickhouse-server/config.xml，在配置文件的 标签下，增加集群的节点配置即可
+
+
+#### remote_server 
+
+
+配置集群时，主要不要配置 `<host>` 和 `<port>` 为转发端口。ck使用zookeeper作为分布式查询的同步节点，其中存储了分布式查询任务，可使用 zookeeper 客户端通过路径 `/clickhouse/task_queue/ddl/` 查看执行情况，查看其中任意任务内容即可发现，ck是根据配置中的 host 和 port 来明确需要执行分布式任务的服务
+
+![avatar](ck1.png)
+
+[stackoverflow](https://stackoverflow.com/questions/64947277/clickhouse-create-database-on-cluster-ends-with-timeout "ClickHouse的配置问题")  也有人反馈此问题
