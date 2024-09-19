@@ -67,3 +67,20 @@ $ git clone https://github.com/next-theme/hexo-theme-next themes/next
 > 命令后缀的themes/next不必须按照示例来，next是指clone后的所在文件夹名，这个可以任意命名，只需要clone后，将根目录下的_config.yml中theme参数配置为对应的文件夹名就可以了
 
 Hexo新版本下，修改主题的配置文件有了新的方式，只需要在根目录下建立_config.xxx.yml，xxx对应的是themes下使用主题所在的文件夹名
+
+### Hexo常用命令
+
+- `hexo clean` 删除编译文件
+- `hexo g` 编译文件
+- `hexo d` 推送编译文件到远端。如果存储在 github 上，需配置 setting 中的 **SSH keys**
+
+### 常用 Markdown 语法
+
+#### Note 引用
+
+Note 引用包含 `success / primary / warning / default / info / danger` 类型
+
+``` Markdown
+{% note warning %} warning {% endnote %}
+````
+

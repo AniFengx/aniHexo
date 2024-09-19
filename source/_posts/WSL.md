@@ -170,7 +170,7 @@ netsh interface portproxy show all
 
 #### 镜像模式
 
-部分情况下，wsl 中的应用程序需要 wsl 虚拟机所在 ip 和宿主机保持一致，这时可启用 wsl 的镜像模式，参考 [参考](https://learn.microsoft.com/zh-cn/windows/wsl/wsl-config#wslconfig "WSL 中的高级设置配置") 
+部分情况下，wsl 中的应用程序需要 wsl 虚拟机所在 ip 和宿主机保持一致，这时可启用 wsl 的镜像模式，[参考](https://learn.microsoft.com/zh-cn/windows/wsl/wsl-config#wslconfig "WSL 中的高级设置配置") 
 
 开启方式为修改 .wslconfig 文件，使用 .wslconfig 为 WSL 上运行的所有已安装的发行版配置全局设置。
 
@@ -187,8 +187,6 @@ WSL 将检测这些文件是否存在，读取内容，并在每次启动 WSL �
 [wsl2]
 networkingMode=mirrored
 ```
-
-
 
 ### Windows 与 WSL 文件交互
 
